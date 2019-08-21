@@ -9,6 +9,11 @@
     ],
     "routes": [
         {
+            "src": "/services/_init_.py",
+            "methods": ["GET"],
+            "dest": "/"
+        },
+        {
             "src": "/services/user.py",
             "methods": ["POST", "GET"],
             "dest": "/user/"
