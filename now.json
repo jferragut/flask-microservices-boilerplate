@@ -1,0 +1,21 @@
+{
+    "name": "zeit-chat",
+    "version": 1.0,
+    "env": {
+        "MY_KEY": "this is the value",
+        "SECRET": "@my-secret-name"
+    },
+    "builds": [
+        {
+            "src": "*.py",
+            "use": "@now/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/user.js",
+            "methods": ["POST", "GET"],
+            "dest": "/api/user.js"
+        }
+    ]
+}
