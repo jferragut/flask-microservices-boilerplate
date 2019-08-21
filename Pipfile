@@ -4,10 +4,24 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 flask = "*"
 sqlalchemy = "*"
+flask-cors = "*"
+flask-swagger = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+python-dotenv = "*"
+mysql-connector-python = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+start="flask run -p 3000 -h 0.0.0.0"
+init="flask db init"
+migrate="flask db migrate"
+upgrade="flask db upgrade"
