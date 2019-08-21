@@ -1,14 +1,5 @@
-venv/
+# Ignore vscode settings
+.vscode
 
-*.pyc
-__pycache__/
-
-instance/
-
+# Ignore pytest cache
 .pytest_cache/
-.coverage
-htmlcov/
-
-dist/
-build/
-*.egg-info/
