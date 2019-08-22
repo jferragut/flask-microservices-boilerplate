@@ -15,19 +15,30 @@ app.config.update(
 )
 MIGRATE = Migrate(app, db)
 db.init_app(app)
+with app.app_context():
+    db.create_all()
+    db.session.commit()
 CORS(app)
 
 
 # simple hello
 @app.route('/')
-def sitemap():
+def main():
     return "hello, world."
 
 
-@app.route('/user', methods=["GET"])
+@app.route('/user', methods=["GET", "POST"])
 def user():
-    response_body = {"name": "Jon"}
-    return jsonify(response_body),200
+    if request.method == 'POST':
+        request_json = request.get_json()
+        name = request_json.get('username')
+        email = request_json.get('email')
+        new = User(username=name, email=email)
+        db.session.add(new)
+        db.session.commit()
+        return 'User Added',200
+    else:
+        return jsonify(json_list=[i.serialize for i in User.query.all()]), 200
 
 
 # this only runs if `$ python src/main.py` is exercuted
