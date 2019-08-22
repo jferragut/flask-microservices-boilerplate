@@ -9,8 +9,10 @@ from services.user.model import User
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.update(
+    SQLALCHEMY_DATABASE_URI=os.environ.get('DB_CONNECTION_STRING'),
+    SQLALCHEMY_TRACK_MODIFICATIONS=False
+)
 MIGRATE = Migrate(app, db)
 db.init_app(app)
 CORS(app)
@@ -24,9 +26,8 @@ def sitemap():
 
 @app.route('/user', methods=["GET"])
 def user():
-    # response_body = {"name": "Jon"}
-    # return jsonify(response_body),200
-    return User
+    response_body = {"name": "Jon"}
+    return jsonify(response_body),200
 
 
 # this only runs if `$ python src/main.py` is exercuted
