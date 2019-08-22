@@ -3,7 +3,11 @@
     "version": 2,
     "builds": [
         {
-            "src": "*.py",
+            "src": "/services/*.py",
+            "use": "@now/python"
+        },
+        {
+            "src": "/services/*/*.py",
             "use": "@now/python"
         }
     ],
