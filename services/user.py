@@ -5,10 +5,27 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from models import user_model
 
-user_blueprint = Blueprint('user', __name__)
+app = Flask(__name__)
+app.url_map.strict_slashes = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+MIGRATE = Migrate(app, user_model)
+user_model.init_app(app)
+CORS(app)
 
 
-@user_blueprint.route('/user',methods=["GET"])
-def user_blueprint():
-    userdata = {"name": "Jon"}
-    return jsonify(userdata), 200
+# simple hello
+@app.route('/')
+def sitemap():
+    return "hello, world."
+
+@user_blueprint.route('/user', methods=["GET"])
+def get_users():
+    response_body = {"name": "Jon"}
+    return jsonify(response_body), 200
+
+# this only runs if `$ python src/main.py` is exercuted
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 3000))
+    app.run(host='0.0.0.0', port=PORT)
+
