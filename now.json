@@ -1,6 +1,6 @@
 {
     "name": "zeit-chat",
-    "version": 1.0,
+    "version": 2,
     "builds": [
         {
             "src": "*.py",
