@@ -14,7 +14,7 @@
             "dest": "/"
         },
         {
-            "src": "/services/user.py",
+            "src": "/services/user/user.py",
             "methods": ["POST", "GET"],
             "dest": "/user/"
         }
