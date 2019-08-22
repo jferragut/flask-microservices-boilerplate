@@ -9,14 +9,14 @@
     ],
     "routes": [
         {
-            "src": "/services/user/user.py",
+            "src": "/",
             "methods": ["GET"],
-            "dest": "/"
+            "dest": "/services/user/user.py"
         },
         {
-            "src": "/services/user/user.py",
+            "src": "/user",
             "methods": ["POST", "GET"],
-            "dest": "/user/"
+            "dest": "/services/user/user.py"
         }
     ]
 }
