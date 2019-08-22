@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -10,7 +11,7 @@ app.url_map.strict_slashes = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, user_model)
-user_model.init_app(app)
+app.init_app(app)
 CORS(app)
 
 
@@ -19,10 +20,11 @@ CORS(app)
 def sitemap():
     return "hello, world."
 
-@user_blueprint.route('/user', methods=["GET"])
-def get_users():
+
+@app.route('/user', methods=["GET"])
+def user():
     response_body = {"name": "Jon"}
-    return jsonify(response_body), 200
+    return jsonify(response_body)
 
 # this only runs if `$ python src/main.py` is exercuted
 if __name__ == '__main__':
