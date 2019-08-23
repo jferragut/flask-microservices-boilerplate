@@ -3,20 +3,15 @@
     "version": 2,
     "builds": [
         {
-            "src": "/services/user/*.py",
+            "src": "/services/*/*.py",
             "use": "@now/python"
         }
     ],
     "routes": [
         {
-            "src": "/",
-            "methods": ["GET"],
-            "dest": "/services/user/user.py"
-        },
-        {
-            "src": "/user",
+            "src": "/(.*)",
             "methods": ["POST", "GET"],
-            "dest": "/services/user/user.py"
+            "dest": "/services/*/$1.py"
         }
     ]
 }
