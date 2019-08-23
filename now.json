@@ -9,14 +9,9 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/([^/]+).*",
             "methods": ["POST", "GET"],
             "dest": "api/**/$1.py"
-        },
-        {
-            "src": "/user/(.*)",
-            "methods": ["POST", "GET"],
-            "dest": "api/user/*.py"
         }
     ]
 }
