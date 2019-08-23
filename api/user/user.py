@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
-from services.user.model import db
-from services.user.model import User
+from api.user import db
+from api.user import User
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -41,7 +41,7 @@ def user():
         return jsonify(json_list=[i.serialize for i in User.query.all()]), 200
 
 
-# this only runs if `$ python src/main.py` is exercuted
+# this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT)

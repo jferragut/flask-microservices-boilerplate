@@ -1,13 +1,9 @@
 {
-    "name": "zeit-chat",
+    "name": "flask-microservices-framework",
     "version": 2,
     "builds": [
         {
-            "src": "/services/*.py",
-            "use": "@now/python"
-        },
-        {
-            "src": "/services/user/*.py",
+            "src": "api/**/*.py",
             "use": "@now/python"
         }
     ],
@@ -15,7 +11,12 @@
         {
             "src": "/(.*)",
             "methods": ["POST", "GET"],
-            "dest": "/services/*/$1.py"
+            "dest": "api/**/$1.py"
+        },
+        {
+            "src": "/user/(.*)",
+            "methods": ["POST", "GET"],
+            "dest": "api/user/*.py"
         }
     ]
 }
