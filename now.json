@@ -5,13 +5,22 @@
         {
             "src": "api/**/*.py",
             "use": "@now/python"
+        },
+        {
+            "src": "api/*.py",
+            "use": "@now/python"
         }
     ],
     "routes": [
         {
-            "src": "/([^/]+).*",
+            "src": "/(.*)",
             "methods": ["POST", "GET"],
-            "dest": "api/**/$1.py"
+            "dest": "api/**/*.py"
+        },
+        {
+            "src": "/",
+            "methods": ["POST", "GET"],
+            "dest": "api/*.py"
         }
     ]
 }

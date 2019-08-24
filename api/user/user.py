@@ -4,9 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
-from api.user import db
-from api.user import User
+from api.user import model
 
+db= model.db
+User= model.User
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.config.update(
@@ -21,10 +22,11 @@ with app.app_context():
 CORS(app)
 
 
-# simple hello
-@app.route('/')
-def main():
-    return "hello, world."
+# catch-all
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+	return "You visited the %s page" % (path)
 
 
 @app.route('/user', methods=["GET", "POST"])
