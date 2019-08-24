@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
+from flask_dotenv import DotEnv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_swagger import swagger

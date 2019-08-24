@@ -17,6 +17,7 @@ flask-migrate = "*"
 python-dotenv = "*"
 mysql-connector-python = "*"
 psycopg2-binary = "*"
+flask-dotenv = "*"
 
 [requires]
 python_version = "3.7"

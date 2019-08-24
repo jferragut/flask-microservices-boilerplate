@@ -7,6 +7,9 @@
 # Ignore pycache
 __pycache__
 
+# Ignore .now folder
+.now
+
 # Environment files
 *.env
 !example.env

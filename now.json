@@ -4,23 +4,14 @@
     "builds": [
         {
             "src": "api/**/*.py",
-            "use": "@now/python"
-        },
-        {
-            "src": "api/*.py",
-            "use": "@now/python"
+            "use": "@liudonghua123/now-flask"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
             "methods": ["POST", "GET"],
-            "dest": "api/**/*.py"
-        },
-        {
-            "src": "/",
-            "methods": ["POST", "GET"],
-            "dest": "api/*.py"
+            "dest": "api/*/$1.py"
         }
     ]
 }
