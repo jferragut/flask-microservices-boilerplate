@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, Response
 from flask_dotenv import DotEnv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -23,11 +23,13 @@ with app.app_context():
 CORS(app)
 
 
-# catch-all
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-	return "You visited the %s page" % (path)
+    if(path=="user"):
+        return "Welcome to /user"
+    else:
+        return Response("<h1>Flask on Now</h1><p>You visited: /%s</p>" % (path), mimetype="text/html")
 
 
 @app.route('/user', methods=["GET", "POST"])
@@ -42,10 +44,4 @@ def user():
         return 'User Added',200
     else:
         return jsonify(json_list=[i.serialize for i in User.query.all()]), 200
-
-
-# this only runs if `$ python src/main.py` is executed
-if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=PORT)
 

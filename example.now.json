@@ -3,16 +3,15 @@
     "version": 2,
     "builds": [
         {
-            "src": "api/**/*.py",
+            "src": "api/*.py",
             "use": "@now/python"
         }
     ],
     "routes": [
         {
-            "src": "^(/.*)",
-            "methods": ["GET","POST"],
-            "dest": "api/**/$1.py", 
-            "continue": true
+            "src": "/(.*)",
+            "methods": ["GET"],
+            "dest": "api/index.py"
         }
     ]
 }
