@@ -14,8 +14,7 @@
         {
             "src": "^(/.*)",
             "methods": ["GET","POST"],
-            "dest": "api/**/$1.py", 
-            "continue": true
+            "dest": "api/*/$1.py"
         }
     ]
 }

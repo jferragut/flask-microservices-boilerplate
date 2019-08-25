@@ -25,7 +25,7 @@ def catch_all(path):
     return Response("<h1>Flask on Now</h1><p>You visited: /%s</p>" % (path), mimetype="text/html")
 
 
-@app.route('/api/user/user.py', methods=["GET", "POST"])
+@app.route('/api/user/', methods=["GET", "POST"])
 def user():
     if request.method == 'POST':
         request_json = request.get_json()
