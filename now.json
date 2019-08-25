@@ -9,6 +9,9 @@
     ],
     "routes": [
         {
+            "handle": "filesystem"
+        },
+        {
             "src": "^(/.*)",
             "methods": ["GET","POST"],
             "dest": "api/**/$1.py", 
