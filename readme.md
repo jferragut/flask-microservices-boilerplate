@@ -13,3 +13,7 @@ This project aims to build a lightweight boilerplate to build Python based micro
 2. Clone the repository using `git clone https://github.com/jferragut/flask-microservices-boilerplate.git`
 3. To install the global packages Pipenv, Heroku CLI, and Zeit CLI run `bash install.sh` from the root project folder.
 4. To start the flask webserver execute the following command `pipenv run start`
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
