@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "jferragut",
+      "name": "Jonathan Ferragut",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/31458614?v=4",
+      "profile": "http://www.alkemyinc.com",
+      "contributions": [
+        "infra",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "flask-microservices-boilerplate",
+  "projectOwner": "jferragut",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
