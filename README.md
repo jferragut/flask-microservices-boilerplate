@@ -17,6 +17,8 @@ This project aims to build a lightweight boilerplate to build Python based micro
 
 ## Contributors ✨
 
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
 <table>
@@ -26,4 +28,4 @@ This project aims to build a lightweight boilerplate to build Python based micro
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
