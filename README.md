@@ -15,6 +15,10 @@ This project aims to build a lightweight boilerplate to build Python based micro
 3. To install the global packages Pipenv, Heroku CLI, and Zeit CLI run `bash install.sh` from the root project folder.
 4. To start the flask webserver execute the following command `pipenv run start`
 
+## How to Contribute
+
+If you are interested in becoming a contributor to this open source project, please read `CONTRIBUTING.md`. All template information is found in `ISSUE-TEMPLATE.md`.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
