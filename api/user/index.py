@@ -9,13 +9,17 @@ from .model import User
 # Initialize Flask App
 app = Flask(__name__)
 
-# Initialize Firestore DB
+# Set an environment variables for GOOGLE_APPLICATION_CREDENTIALS in .env file to test locally
+# to push to production on zeit, you will need to use the CLI to define and then expose it.
 cred = credentials.Certificate(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+# Initialize Firestore DB
 default_app = initialize_app(cred)
 db = firestore.client()
+# if you are saving to a collection called users, you need to set this in a variable like so
 user_ref = db.collection('users')
 
-
+# the actual route is a catch-all, so you have to treat
+# each request type as a conditional
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>', methods=['GET','POST','PUT','DELETE'])
 def catch_all(path):
