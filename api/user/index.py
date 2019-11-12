@@ -1,41 +1,128 @@
+# This is a demo for creating a user catchall endpoint that uses firestore
+# To publish this, make sure you push your environment variables to your CI/CD
+
 import os
-from flask import Flask, request, jsonify, url_for, Blueprint, Response
-# from flask_dotenv import DotEnv
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_migrate import Migrate
-from flask_swagger import swagger
-from flask_cors import CORS
-# from api.user.model import db,User
+from flask import Flask, request, jsonify, Response
+from firebase_admin import credentials, firestore, initialize_app
+from .model import User
 
-
+# Initialize Flask App
 app = Flask(__name__)
-# app.url_map.strict_slashes = False
-# app.config.from_pyfile('settings.cfg')
-# MIGRATE = Migrate(app, db)
-# db.init_app(app)
-# with app.app_context():
-#     db.create_all()
-#     db.session.commit()
-# CORS(app)
+
+# Initialize Firestore DB
+cred = credentials.Certificate(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+default_app = initialize_app(cred)
+db = firestore.client()
+user_ref = db.collection('users')
 
 
 @app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/<path:path>', methods=['GET','POST','PUT','DELETE'])
 def catch_all(path):
-    return Response("<h1>Flask on Now</h1><p>You visited: /%s</p>" % (path), mimetype="text/html")
+    # Get User or Users
+    # if you want a specific user pass an id parameter as a query string
+    if(request.method=="GET"):
+        try:
+            # Check if ID or Username was passed to URL query
+            # if so, return a single user
+            user_id = request.args.get('id')
+            user_name = request.args.get('username')
 
+            if user_id:
+                user_query = user_ref.where(u'id', u'==', user_id).stream()
+                query_result = []
+                for user in user_query:
+                    query_result.append(
+                        {
+                            "doc_id": user.id,
+                            "user": user.to_dict()
+                        })
+                return jsonify(query_result), 200
 
-# @app.route('/api/user/', methods=["GET", "POST"])
-# def user():
-#     if request.method == 'POST':
-#         request_json = request.get_json()
-#         name = request_json.get('username')
-#         email = request_json.get('email')
-#         new = User(username=name, email=email)
-#         db.session.add(new)
-#         db.session.commit()
-#         return 'User Added',200
-#     else:
-#         json_list = [i.serialize for i in User.query.all()]
-#         return jsonify(json_list), 200
+            if user_name:
+                user_query = user_ref.where(u'username', u'==', user_name).stream()
+                query_result = []
+                for user in user_query:
+                    query_result.append(
+                        {
+                            "doc_id": user.id,
+                            "user": user.to_dict()
+                        })
+                return jsonify(query_result), 200
 
+            # Otherwise, return all users
+            else:
+                all_users = [doc.to_dict() for doc in user_ref.stream()]
+                return jsonify(all_users), 200
+                
+        except Exception as e:
+            return "An exception of type {0} occurred. \nArguments: {1!r}".format(
+                type(e).__name__, e.args)
+    
+    # Create User Record
+    elif(request.method=="POST"):
+        try:
+            # set up the json object
+            req = request.get_json()
+            # define parameters from object
+            user_id = req['user_id']
+            username = req['username']
+            first_name = req['first_name']
+            last_name = req['last_name']
+            friendly_name = req['friendly_name']
+            password = req['password']
+            password_hint = req['password_hint']
+            # instantiate class for object to type check
+            user = User(user_id=user_id, username=username, first_name=first_name,
+                        last_name=last_name, friendly_name=friendly_name,
+                        password=password, password_hint=password_hint)
+            # no errors thrown, then write the user to firestore
+            user_ref.document().set(user.to_dict())
+            # return success
+            return jsonify({"Success": True, "message": "The User has been successfully created."}), 200
+        except KeyError as e:
+            return f"The required property {e} is missing. Please include it in your request."
+        except Exception as e:
+            return "An exception of type {0} occurred. \nArguments: {1!r}".format(
+                type(e).__name__, e.args)
+        
+    
+    elif(request.method == "PUT"):
+        try:
+            id = request.json['id']
+            user_ref.document(id).update(request.json)
+            return jsonify({"Success": True, "message": "The User has been successfully updated."}), 200
+        except Exception as e:
+            return "An exception of type {0} occurred. \nArguments: {1!r}".format(
+                type(e).__name__, e.args)
+    
+    elif(request.method == "DELETE"):
+        try:
+            # Check if ID or Username was passed to URL query
+            user_id = request.args.get('id')
+            user_name = request.args.get('username')
+
+            if user_id:
+                user_query = user_ref.where(u'id', u'==', user_id).stream()
+                query_result = []
+                for user in user_query:
+                    query_result.append(
+                        user.id)
+                user_ref.document(query_result[0]).delete()
+                return jsonify({"success": True, "message": "The User has been successfully deleted."}), 200
+
+            if user_name:
+                user_query = user_ref.where(
+                    u'username', u'==', user_name).stream()
+                query_result = []
+                for user in user_query:
+                    query_result.append(
+                        user.id)
+                user_ref.document(query_result[0]).delete()
+                return jsonify({"success": True, "message":"The User has been successfully deleted."}), 200
+        except Exception as e:
+            return "An exception of type {0} occurred. \nArguments: {1!r}".format(
+                type(e).__name__, e.args)
+
+    else:
+        return jsonify({"success": False, "message": "That request method isn't available on this endpoint."}), 405
