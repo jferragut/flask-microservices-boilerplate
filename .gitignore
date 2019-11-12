@@ -13,3 +13,6 @@ __pycache__
 # Environment files
 *.env
 !example.env
+
+# firebase key file
+key.json
